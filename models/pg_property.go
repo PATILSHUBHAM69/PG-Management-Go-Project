@@ -1,4 +1,4 @@
-// package models
+package models
 
 // type Pg struct {
 // 	ID         uint   `json:"id" validate:"required"`

@@ -1,4 +1,4 @@
-// package routes
+package routes
 
 // import (
 // 	controller "pg-management/controllers"

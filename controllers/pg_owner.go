@@ -1,4 +1,4 @@
-// package controllers
+package controllers
 
 // import (
 // 	"pg-management/models"
