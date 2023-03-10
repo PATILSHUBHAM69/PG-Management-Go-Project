@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Viru9029/E-Commerce-Project/database"
-	helper "github.com/Viru9029/E-Commerce-Project/helpers"
-	"github.com/Viru9029/E-Commerce-Project/models"
+	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/database"
+	helper "github.com/PATILSHUBHAM69/PG-Management-Go-Project/helpers"
+	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/models"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/crypto/bcrypt"

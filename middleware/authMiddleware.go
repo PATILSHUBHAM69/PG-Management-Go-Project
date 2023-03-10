@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	helper "github.com/Viru9029/E-Commerce-Project/helpers"
+	helper "github.com/PATILSHUBHAM69/PG-Management-Go-Project/helpers"
 	"github.com/gin-gonic/gin"
 )
 

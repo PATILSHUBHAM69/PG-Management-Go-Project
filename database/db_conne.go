@@ -1,24 +1,24 @@
-package database
+// package database
 
-import (
-	"database/sql"
-	"fmt"
-	"log"
+// import (
+// 	"database/sql"
+// 	"fmt"
+// 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
-)
+// 	_ "github.com/go-sql-driver/mysql"
+// )
 
-var db *sql.DB
+// var db *sql.DB
 
-func Connect() {
-	var err error
-	db, err = sql.Open("mysql", "root:india@123@tcp(localhost:3306)/pgmanagement")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Connected to MySQL database!")
-}
+// func Connect() {
+// 	var err error
+// 	db, err = sql.Open("mysql", "root:india@123@tcp(localhost:3306)/pgmanagement")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	err = db.Ping()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	fmt.Println("Connected to MySQL database!")
+// }

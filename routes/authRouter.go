@@ -1,7 +1,7 @@
 package routes
 
 import(
-	controller "github.com/Viru9029/E-Commerce-Project/controllers"
+	controller "github.com/PATILSHUBHAM69/PG-Management-Go-Project/controllers"
 	"github.com/gin-gonic/gin"
 )
 
