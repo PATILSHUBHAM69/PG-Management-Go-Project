@@ -1,7 +1,7 @@
 package models
 
 type Booking struct {
-	Customer_ID    *int    `json:"customer_id" validate:"required"`
+	Customer_ID    *int    `json:"customer_id"`
 	Customer_Name  *string `json:"customer_name" validate:"required"`
 	Cus_Contact_No *string `json:"cus_contact_no" validate:"required"`
 	Property_ID    *int    `json:"property_id" validate:"required"`

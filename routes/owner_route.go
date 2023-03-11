@@ -8,8 +8,8 @@ import (
 
 func UserRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.Use(middleware.Authenticate())
-	incomingRoutes.GET("/users", controller.GetUsers())
-	incomingRoutes.GET("/users/:user_id", controller.GetUser())
-	incomingRoutes.GET("/getUser", controller.GetUser2())
-
+	incomingRoutes.GET("/users", controller.Add_Property())
+	incomingRoutes.GET("/users/:user_id", controller.Update_Property())
+	incomingRoutes.GET("/getUser", controller.Delete_property())
+	incomingRoutes.GET("/getUser", controller.See_bookings())
 }

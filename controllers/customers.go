@@ -11,7 +11,7 @@ import (
 )
 
 func Get_All_PG(c *gin.Context) {
-	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -44,7 +44,7 @@ func Get_All_PG(c *gin.Context) {
 }
 
 func Get_PG_ByLocation(c *gin.Context) {
-	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -82,7 +82,7 @@ func Get_PG_ByLocation(c *gin.Context) {
 }
 
 func Book_pg(c *gin.Context) {
-	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -104,7 +104,7 @@ func Book_pg(c *gin.Context) {
 }
 
 func Update_booking(c *gin.Context) {
-	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -124,7 +124,7 @@ func Update_booking(c *gin.Context) {
 }
 
 func Delete_Booking(c *gin.Context) {
-	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 	if err != nil {
 		panic(err.Error())
 	}
