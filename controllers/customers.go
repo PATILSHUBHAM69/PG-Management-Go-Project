@@ -12,7 +12,7 @@ import (
 
 func Get_All_PG(c *gin.Context) {
 	database.Connect()
-	results, err := db.Query("SELECT * FROM Property_Details")
+	results, err := Db.Query("SELECT * FROM Property_Details")
 	if err != nil {
 		panic(err.Error())
 	}
