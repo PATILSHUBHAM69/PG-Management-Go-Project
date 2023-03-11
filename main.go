@@ -1,9 +1,10 @@
 package main
 
 import (
-	database "PG-Managemen-Go-Project/database"
 	"log"
 	"os"
+
+	database "github.com/PATILSHUBHAM69/PG-Management-Go-Project/database"
 
 	routes "github.com/PATILSHUBHAM69/PG-Management-Go-Project/routes"
 	"github.com/gin-gonic/gin"

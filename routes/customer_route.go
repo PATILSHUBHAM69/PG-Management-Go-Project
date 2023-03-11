@@ -8,9 +8,9 @@ import (
 
 func UserRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.Use(middleware.Authenticate())
-	incomingRoutes.GET("/users", controller.Get_All_PG())
-	incomingRoutes.GET("/users/:user_id", controller.Get_PG_ByLocation())
-	incomingRoutes.GET("/getUser", controller.Book_pg())
-	incomingRoutes.GET("/getUser", controller.Update_booking())
-	incomingRoutes.GET("/getUser", controller.Delete_Booking())
+	incomingRoutes.GET("/allpg", controller.Get_All_PG())
+	incomingRoutes.GET("/pglocation", controller.Get_PG_ByLocation())
+	incomingRoutes.POST("/bookpg", controller.Book_pg())
+	incomingRoutes.PUT("/updatebooking", controller.Update_booking())
+	incomingRoutes.DELETE("/canclebooking", controller.Delete_Booking())
 }
