@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserRoutes(incomingRoutes *gin.Engine) {
+func PgOwnerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.Use(middleware.Authenticate())
 	incomingRoutes.GET("/users", controller.Add_Property())
 	incomingRoutes.GET("/users/:user_id", controller.Update_Property())

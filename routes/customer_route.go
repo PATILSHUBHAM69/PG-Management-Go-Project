@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserRoutes(incomingRoutes *gin.Engine) {
+func CustomerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.Use(middleware.Authenticate())
 	incomingRoutes.GET("/allpg", controller.Get_All_PG())
 	incomingRoutes.GET("/pglocation", controller.Get_PG_ByLocation())
