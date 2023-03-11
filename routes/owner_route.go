@@ -1,17 +1,15 @@
 package routes
 
-// import (
-// 	controller "pg-management/controllers"
+import (
+	controller "github.com/PATILSHUBHAM69/PG-Management-Go-Project/controllers"
+	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/middleware"
+	"github.com/gin-gonic/gin"
+)
 
-// 	"github.com/gin-gonic/gin"
-// )
+func UserRoutes(incomingRoutes *gin.Engine) {
+	incomingRoutes.Use(middleware.Authenticate())
+	incomingRoutes.GET("/users", controller.GetUsers())
+	incomingRoutes.GET("/users/:user_id", controller.GetUser())
+	incomingRoutes.GET("/getUser", controller.GetUser2())
 
-// func pg_owner_routes(incomingRoutes *gin.Engine) {
-// 	incomingRoutes.GET("/get_ownerID", controller.Getowner_byID())
-// 	incomingRoutes.GET("/get", controller.Get_Alluser())
-// 	incomingRoutes.POST("/sign_up", controller.Sign_up())
-// 	incomingRoutes.POST("/owner_login", controller.Login())
-// 	incomingRoutes.PATCH("/owner_update", controller.Update_owner())
-// 	incomingRoutes.DELETE("/owner_delete", controller.Delete_owner())
-// 	incomingRoutes.GET("/see_booking", controller.See_booking())
-// }
+}

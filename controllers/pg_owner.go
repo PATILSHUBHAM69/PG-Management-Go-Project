@@ -1,141 +1,89 @@
 package controllers
 
-// import (
-// 	"pg-management/models"
-// 	"database/sql"
-// 	"fmt"
-// 	"net/http"
-// 	"pg-managment/database"
-// 	"github.com/gin-gonic/gin"
-// 	_ "github.com/go-sql-driver/mysql"
-// )
+import (
+	"fmt"
+	"net/http"
 
-// func Getowner_byID() gin.HandlerFunc{
-// 	retrun func(c *gin.Context) {
-// 		database.Connect()
-// 		var get_pg models.Owner
-// 		err := c.BindJSON(&get_pg)
-// 		if err != nil {
-// 			return
-// 		}
-// 		query := fmt.Sprintf("SELECT * FROM Owner_Details WHERE ID=%d", get_pg.ID)
-// 		results, err := db.Query(query)
-// 		if err != nil {
-// 			panic(err.Error())
-// 		}
-// 		defer results.Close()
-// 		var output interface{}
-// 		for results.Next() {
-// 			var Id uint
-// 			var F_Name string
-// 			var L_Name string
-// 			var Email string
-// 			var Phonenumber string
-// 			var City string
-// 			var PinCode int
-// 			var State string
-// 			var Location string
-// 			err = results.Scan(&Id_, &F_Name, &L_Name, &Email, &Phonenumber, &City, &PinCode,&State, &Location)
-// 			if err != nil {
-// 				panic(err.Error())
-// 			}
-// 			output = fmt.Sprintf("%d %s %s %s %s %s %d %s %s \n", Id_, F_Name, L_Name, Email, Phonenumber, , City, PinCode, State, Location)
-// 			c.IndentedJSON(http.StatusOK, output)
-// 		}
-// 	}
-// }
+	"PG-Management-Go-Project/database"
+	"PG-Management-Go-Project/models"
 
-// func get_Allowner(c *gin.Context) {
-// 	database.Connect()
-// 	results, err := db.Query("SELECT * FROM Owner_Details")
-// 	if err != nil {
-// 		panic(err.Error())
-// 	}
-// 	defer results.Close()
-// 	var output interface{}
-// 	for results.Next() {
-// 		var Id uint
-// 		var F_Name string
-// 		var L_Name string
-// 		var Email string
-// 		var Phonenumber string
-// 		var City string
-// 		var PinCode int
-// 		var State string
-// 		var Location string
-// 		err = results.Scan(&Id_, &F_Name, &L_Name, &Email, &Phonenumber, &City, &PinCode,&State, &Location)
-// 		if err != nil {
-// 			panic(err.Error())
-// 		}
-// 		output = fmt.Sprintf("%d %s %s %s %s %s %d %s %s \n", Id_, F_Name, L_Name, Email, Phonenumber, , City, PinCode, State, Location)
-// 		c.IndentedJSON(http.StatusOK, output)
-// 	}
-// }
+	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
+)
 
-// func Sign_up(c *gin.Context) {
-// 	database.Connect()
-// 	var  sign_up models.Owner
-// 	err = c.BindJSON(&sign_up)
-// 	if err != nil {
-// 		return
-// 	}
+func Add_Property(c *gin.Context) {
+	database.Connect()
+	var add_property models.Owner
+	err := c.BindJSON(&add_property)
+	if err != nil {
+		return
+	}
 
-// 	query_data := fmt.Sprintf(`INSERT INTO Owner_Details VALUES("%d", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%d", "%s", "%s")`, sign_up.ID, sign_up.First_Name, sign_up.Last_Name, sign_up.Password,sign_up.Email, sign_up.PhoneNumber,sign_up.City, sign_up.Pin_Code, sign_up.State,sign_up.Location)
+	query_edit_property := fmt.Sprintf(`INSERT INTO Property_Details VALUES("%d", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s", "%s")`, add_property.Property_ID, add_property.Property_Name, &add_property.Contact_No, add_property.Property_Type, add_property.Property_Address, add_property.City, add_property.Pin_Code, &add_property.LandMark, add_property.Ammeneties, add_property.Price, add_property.Advance_Deposit)
 
-// 	insert, err := db.Query(query_data)
-// 	if err != nil {
-// 		panic(err.Error())
-// 	}
-// 	defer insert.Close()
-// 	fmt.Println("Yes, values added!")
-// }
+	insert, err := db.Query(query_edit_property)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer insert.Close()
+	fmt.Println("Yes, Property added Successfully!")
+}
 
-// func Login(c *gin.Context) {
-// 	database.Connect()
-// 	var add_newpro models.owner
-// 	err = c.BindJSON(&add_newpro)
-// 	if err != nil {
-// 		return
-// 	}
+func Update_Property(c *gin.Context) {
+	database.Connect()
+	var edit_property models.owner
+	err := c.BindJSON(&edit_property)
+	if err != nil {
+		return
+	}
+	query := fmt.Sprintf("UPDATE Property_Details SET Property_Name='%s',Contact_No='%s', Property_Type='%s', Property_Address='%s', City='%s', Pin_Code='%s', LandMark='%s' Ammeneties='%s', Price='%s', Advance_Deposit='%s' WHERE Property_ID=%d", edit_property.Property_Name, edit_property.Contact_No, edit_property.Property_Type, edit_property.Property_Address, edit_property.City, edit_property.Pin_Code, &edit_property.LandMark, edit_property.Ammeneties, edit_property.Price, edit_property.Advance_Deposit, edit_property.Property_ID)
+	results, err := db.Query(query)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	defer results.Close()
+}
 
-// }
+func Delete_property(c *gin.Context) {
+	database.Connect()
+	var delete_property models.owner
+	err := c.BindJSON(&delete_property)
+	if err != nil {
+		return
+	}
+	query := fmt.Sprintf("DELETE FROM Property_Details WHERE Property_ID=%d", delete_property.ID)
+	results, err := db.Query(query)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer results.Close()
+}
 
-// func Update_owner(c *gin.Context) {
-// 	database.Connect()
-// 	var data models.owner
-// 	err = c.BindJSON(&data)
-// 	if err != nil {
-// 		return
-// 	}
-// 	query := fmt.Sprintf("UPDATE Owner_details SET First_Name='%s', Last_Name='%s', Email='%s', PhoneNumber='%s', PropertyID='%d', PG_Type='%s', City='%s',Pin_Code='%d', State='%s', Location='%s' WHERE ID=%d", data.First_Name, data.Last_Name, data.Email, data.PhoneNumber, data.PropertyID, data.PG_Type, data.City, data.Pin_Code, data.State, data.Location, data.ID)
-// 	results, err := db.Query(query)
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	defer results.Close()
-// }
-
-// func Delete_owner(c *gin.Context) {
-// 	database.Connect()
-// 	var get_pro models.owner
-// 	err = c.BindJSON(&get_pro)
-// 	if err != nil {
-// 		return
-// 	}
-// 	query := fmt.Sprintf("DELETE FROM Owner_Details WHERE ID=%d", get_pro.ID)
-// 	results, err := db.Query(query)
-// 	if err != nil {
-// 		panic(err.Error())
-// 	}
-// 	defer results.Close()
-// }
-
-// func See_booking(c *gin.Context) {
-// 	database.Connect()
-// 	var get_pro models.owner
-// 	err = c.BindJSON(&get_pro)
-// 	if err != nil {
-// 		return
-// 	}
-// }
+func See_bookings(c *gin.Context) {
+	database.Connect()
+	var check_bookings models.Booking
+	err := c.BindJSON(&check_bookings)
+	if err != nil {
+		return
+	}
+	query := fmt.Sprintf("SELECT * FROM Booking_Details WHERE Property_ID=%d", check_bookings.Property_ID)
+	results, err := db.Query(query)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer results.Close()
+	var output interface{}
+	for results.Next() {
+		var Customer_id int
+		var Property_id int
+		var Booking_time string
+		var Booking_id int
+		err = results.Scan(&Customer_id, &Property_id, &Booking_time, &Booking_id)
+		if err != nil {
+			panic(err.Error())
+		}
+		output = fmt.Sprintf("%d %d %s %d \n", Customer_id, Property_id, Booking_time, Booking_id)
+		c.IndentedJSON(http.StatusOK, output)
+	}
+}

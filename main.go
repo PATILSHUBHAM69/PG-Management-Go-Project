@@ -1,6 +1,7 @@
 package main
 
 import (
+	database "PG-Managemen-Go-Project/database"
 	"log"
 	"os"
 
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+	database.Connect()
 	err := godotenv.Load(".env")
 
 	if err != nil {
@@ -36,4 +38,5 @@ func main() {
 	})
 
 	router.Run(":" + port)
+
 }
