@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"PG-Management-Go-Project/models"
 	"database/sql"
 	"fmt"
 	"net/http"
+
+	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/models"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -16,7 +17,7 @@ func Add_Property(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer db.Close()
-	var add_property models.Owner
+	var add_property models.User
 	err = c.BindJSON(&add_property)
 	if err != nil {
 		return
@@ -38,7 +39,7 @@ func Update_Property(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer db.Close()
-	var edit_property models.owner
+	var edit_property models.User
 	err = c.BindJSON(&edit_property)
 	if err != nil {
 		return
@@ -58,7 +59,7 @@ func Delete_property(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer db.Close()
-	var delete_property models.owner
+	var delete_property models.User
 	err = c.BindJSON(&delete_property)
 	if err != nil {
 		return
