@@ -1,18 +1,22 @@
 package controllers
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
-	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/database"
 	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/models"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func Get_All_PG(c *gin.Context) {
-	database.Connect()
-	results, err := Db.Query("SELECT * FROM Property_Details")
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+	results, err := db.Query("SELECT * FROM Property_Details")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -40,9 +44,13 @@ func Get_All_PG(c *gin.Context) {
 }
 
 func Get_PG_ByLocation(c *gin.Context) {
-	database.Connect()
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
 	var get_pgLocation models.User
-	err := c.BindJSON(&get_pgLocation)
+	err = c.BindJSON(&get_pgLocation)
 	if err != nil {
 		return
 	}
@@ -74,9 +82,13 @@ func Get_PG_ByLocation(c *gin.Context) {
 }
 
 func Book_pg(c *gin.Context) {
-	database.Connect()
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
 	var add_booking models.Booking
-	err := c.BindJSON(&add_booking)
+	err = c.BindJSON(&add_booking)
 	if err != nil {
 		return
 	}
@@ -92,9 +104,13 @@ func Book_pg(c *gin.Context) {
 }
 
 func Update_booking(c *gin.Context) {
-	database.Connect()
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
 	var edit_booking models.Booking
-	err := c.BindJSON(&edit_booking)
+	err = c.BindJSON(&edit_booking)
 	if err != nil {
 		return
 	}
@@ -108,9 +124,13 @@ func Update_booking(c *gin.Context) {
 }
 
 func Delete_Booking(c *gin.Context) {
-	database.Connect()
+	db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/go_db8")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
 	var delete_booking models.Booking
-	err := c.BindJSON(&delete_booking)
+	err = c.BindJSON(&delete_booking)
 	if err != nil {
 		return
 	}
