@@ -106,7 +106,7 @@ func Book_pg() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_ID,Customer_Name,Cus_Contact_No,Property_ID,Booking_time,From_Date,To_date) VALUES(%d,"%s","%s",%d,"%s","%s","%s")`, *add_booking.Customer_ID, *add_booking.Customer_Name, *add_booking.Cus_Contact_No, *add_booking.Property_ID, *add_booking.Booking_time, *add_booking.From_Date, *add_booking.To_Date)
+		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_ID,Customer_Name,Cus_Contact_No,Property_ID,Booking_time,From_Date,To_date) VALUES(%d,"%s","%s",%d,"%s","%s","%s")`, add_booking.Customer_ID, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.Booking_time, add_booking.From_Date, add_booking.To_Date)
 
 		insert, err := db.Query(query)
 		if err != nil {
@@ -131,7 +131,7 @@ func Update_booking() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_ID=%d,Customer_Name='%s',Cus_Contact_No='%s',From_Date='%s',To_Date='%s' WHERE Booking_ID=%d", *edit_booking.Customer_ID, *edit_booking.Customer_Name, *edit_booking.Cus_Contact_No, *edit_booking.From_Date, *edit_booking.To_Date, *edit_booking.Booking_ID)
+		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_ID=%d,Customer_Name='%s',Cus_Contact_No='%s',From_Date='%s',To_Date='%s' WHERE Booking_ID=%d", edit_booking.Customer_ID, edit_booking.Customer_Name, edit_booking.Cus_Contact_No, edit_booking.From_Date, edit_booking.To_Date, edit_booking.Booking_ID)
 		_, err = db.Exec(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

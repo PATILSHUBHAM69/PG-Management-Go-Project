@@ -94,7 +94,7 @@ func See_bookings() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("SELECT * FROM BookingDetails WHERE Property_ID=%d", *check_bookings.Property_ID)
+		query := fmt.Sprintf("SELECT * FROM BookingDetails WHERE Property_ID=%d", check_bookings.Property_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			panic(err.Error())
