@@ -25,7 +25,7 @@ func Add_Property() gin.HandlerFunc {
 			return
 		}
 
-		query_edit_property := fmt.Sprintf(`INSERT INTO PropertyDetails VALUES("%d", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s", "%s")`, add_property.Property_Name, add_property.Contact_No, add_property.Property_Type, add_property.Property_Address, add_property.City, add_property.Pin_Code, &add_property.LandMark, add_property.Ammeneties, add_property.Price, add_property.Advance_Deposit)
+		query_edit_property := fmt.Sprintf(`INSERT INTO PropertyDetails (Property_Name,Contact_No,Property_Type,Property_Address,City,Pin_Code,Landmark,Ammeneties,Price,Advance_Deposit) VALUES("%s", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s")`, add_property.Property_Name, add_property.Contact_No, add_property.Property_Type, add_property.Property_Address, add_property.City, add_property.Pin_Code, add_property.LandMark, add_property.Ammeneties, add_property.Price, add_property.Advance_Deposit)
 
 		insert, err := db.Query(query_edit_property)
 		if err != nil {
