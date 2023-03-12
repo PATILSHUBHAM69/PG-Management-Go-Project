@@ -40,7 +40,7 @@ func Get_All_PG() gin.HandlerFunc {
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s'  '%s' '%s' '%s' '%s' '%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
+			output = fmt.Sprintf("Property_ID=%d, Property_Name='%s' Contact_Name='%s' Property_Type='%s' Property_Address='%s' City='%s' Pincode='%s' Landmark='%s' Ammeneties='%s' Price='%s' Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
 
 			c.JSON(http.StatusOK, gin.H{"All PG": output})
 		}
