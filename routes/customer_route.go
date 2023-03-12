@@ -11,6 +11,6 @@ func CustomerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.GET("/allpg", controller.Get_All_PG())
 	incomingRoutes.GET("/pglocation", controller.Get_PG_ByLocation())
 	incomingRoutes.POST("/bookpg", controller.Book_pg())
-	incomingRoutes.PUT("/updatebooking", controller.Update_booking())
+	incomingRoutes.PATCH("/updatebooking", controller.Update_booking())
 	incomingRoutes.DELETE("/canclebooking", controller.Delete_Booking())
 }
