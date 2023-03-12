@@ -1,6 +1,6 @@
 package models
 
-type Booking struct {
+type Booking_pg struct {
 	Customer_ID    *int    `json:"customer_id"`
 	Customer_Name  *string `json:"customer_name" validate:"required"`
 	Cus_Contact_No *string `json:"cus_contact_no" validate:"required"`

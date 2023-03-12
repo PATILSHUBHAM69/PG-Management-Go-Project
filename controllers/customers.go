@@ -101,7 +101,7 @@ func Book_pg() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer db.Close()
-		var add_booking models.Booking
+		var add_booking models.Booking_pg
 		err = c.BindJSON(&add_booking)
 		if err != nil {
 			return
@@ -126,7 +126,7 @@ func Update_booking() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer db.Close()
-		var edit_booking models.Booking
+		var edit_booking models.Booking_pg
 		err = c.BindJSON(&edit_booking)
 		if err != nil {
 			return
@@ -148,7 +148,7 @@ func Delete_Booking() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer db.Close()
-		var delete_booking models.Booking
+		var delete_booking models.Booking_pg
 		err = c.BindJSON(&delete_booking)
 		if err != nil {
 			return

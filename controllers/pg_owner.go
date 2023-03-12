@@ -89,7 +89,7 @@ func See_bookings() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer db.Close()
-		var check_bookings models.Booking
+		var check_bookings models.Booking_pg
 		err = c.BindJSON(&check_bookings)
 		if err != nil {
 			return
