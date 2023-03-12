@@ -49,7 +49,7 @@ func Update_Property() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE PropertyDetails SET property_Name='%s',Contact_No='%s', Property_Type='%s', Property_Address='%s', City='%s', Pin_Code='%s', LandMark='%s' Ammeneties='%s', Price='%s', Advance_Deposit='%s' WHERE Property_ID= %d", *edit_property.Property_Name, *edit_property.Contact_No, *edit_property.Property_Type, *edit_property.Property_Address, *edit_property.City, *edit_property.Pin_Code, *edit_property.LandMark, *edit_property.Ammeneties, *edit_property.Price, *edit_property.Advance_Deposit, *edit_property.Property_ID)
+		query := fmt.Sprintf("UPDATE PropertyDetails SET Property_Name='%s',Contact_No='%s',Property_Type='%s',Property_Address='%s',City='%s',Pin_Code='%s',LandMark='%s',Ammeneties='%s',Price='%s',Advance_Deposit='%s' WHERE Property_ID ='%d' ", *edit_property.Property_Name, *edit_property.Contact_No, *edit_property.Property_Type, *edit_property.Property_Address, *edit_property.City, *edit_property.Pin_Code, *edit_property.LandMark, *edit_property.Ammeneties, *edit_property.Price, *edit_property.Advance_Deposit, *edit_property.Property_ID)
 		_, err = db.Exec(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
