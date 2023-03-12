@@ -26,14 +26,14 @@ func Connect() {
 	fmt.Println("Connected to MySQL database!")
 
 	//Create Tabel
-	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS Property_Details (Property_ID INT NOT NULL AUTO_INCREMEENT=1001, Property_Name varchar(25), Contact_No varchar(15), Property_Type varchar(255), Property_Address varchar(200), City varchar(20), Pin_Code varchar(6), Landmark varchar(30), Ammeneties varchar(200), Price varchar(15), Advance_Deposit varchar(15);")
+	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS PropertyDetails (Property_ID INT NOT NULL AUTO_INCREMENT, Property_Name VARCHAR(25), Contact_No VARCHAR(15), Property_Type VARCHAR(255), Property_Address VARCHAR(200), City VARCHAR(20), Pin_Code VARCHAR(6), Landmark VARCHAR(30), Ammeneties VARCHAR(200), Price VARCHAR(15), Advance_Deposit VARCHAR(15), PRIMARY KEY (Property_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer Create_Property.Close()
 	fmt.Println("Property Details Successfully Created")
 
-	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS Booking_Details (Customer_ID INT NOT NULL AUTO_INCREMEENT=101,Customer_Name varchar(25), Cus_Contact_No varchar(15), Property_ID INT, Booking_time varchar(15), Booking_ID INT, From_Date varchar(20), To_Date varchar(20);")
+	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS BookingDetails (Customer_ID INT,Customer_Name VARCHAR(25), Cus_Contact_No VARCHAR(15), Property_ID INT, Booking_time VARCHAR(15), Booking_ID INT NOT NULL AUTO_INCREMENT, From_Date VARCHAR(20), To_Date VARCHAR(20), PRIMARY KEY (Booking_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}

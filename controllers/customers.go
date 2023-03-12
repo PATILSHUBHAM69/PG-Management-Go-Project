@@ -18,7 +18,7 @@ func Get_All_PG() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer db.Close()
-		results, err := db.Query("SELECT * FROM Property_Details")
+		results, err := db.Query("SELECT * FROM PropertyDetails")
 		if err != nil {
 			panic(err.Error())
 		}
@@ -59,7 +59,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		results, err := db.Query("SELECT * FROM Property_Details WHERE LandMark=%s", get_pgLocation.LandMark)
+		results, err := db.Query("SELECT * FROM PropertyDetails WHERE LandMark=%s", get_pgLocation.LandMark)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -100,7 +100,7 @@ func Book_pg() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf(`INSERT INTO Booking_Details VALUES("%d","%s","%s" "%d","%s", "%d", "%s","%s")`, add_booking.Customer_ID, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.Booking_time, add_booking.Booking_ID, add_booking.From_Date, add_booking.To_Date)
+		query := fmt.Sprintf(`INSERT INTO BookingDetails VALUES("%d","%s","%s" "%d","%s", "%s","%s")`, add_booking.Customer_ID, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.Booking_time, add_booking.From_Date, add_booking.To_Date)
 
 		insert, err := db.Query(query)
 		if err != nil {
@@ -125,7 +125,7 @@ func Update_booking() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE Booking_details SET Customer_ID='%s', Customer_name='%s',Cus_Contact_No='%s',Property_ID='%s', Booking_time='%s', From_Date='%s', To_Date='%s'  WHERE Booking_ID=%s", edit_booking.Customer_ID, edit_booking.Customer_Name, edit_booking.Cus_Contact_No, edit_booking.Property_ID, edit_booking.Booking_time, edit_booking.From_Date, edit_booking.To_Date)
+		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_Name='%s',Cus_Contact_No='%s',From_Date='%s', To_Date='%s'  WHERE Booking_ID=%d", edit_booking.Customer_Name, edit_booking.Cus_Contact_No, edit_booking.From_Date, edit_booking.To_Date, edit_booking.Booking_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -148,7 +148,7 @@ func Delete_Booking() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("DELETE FROM Booking_Details WHERE Booking_ID=%d", delete_booking.Booking_ID)
+		query := fmt.Sprintf("DELETE FROM BookingDetails WHERE Booking_ID=%d", delete_booking.Booking_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			panic(err.Error())

@@ -25,7 +25,7 @@ func Add_Property() gin.HandlerFunc {
 			return
 		}
 
-		query_edit_property := fmt.Sprintf(`INSERT INTO Property_Details VALUES("%d", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s", "%s")`, add_property.Property_Name, &add_property.Contact_No, add_property.Property_Type, add_property.Property_Address, add_property.City, add_property.Pin_Code, &add_property.LandMark, add_property.Ammeneties, add_property.Price, add_property.Advance_Deposit)
+		query_edit_property := fmt.Sprintf(`INSERT INTO PropertyDetails VALUES("%d", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s", "%s")`, add_property.Property_Name, add_property.Contact_No, add_property.Property_Type, add_property.Property_Address, add_property.City, add_property.Pin_Code, &add_property.LandMark, add_property.Ammeneties, add_property.Price, add_property.Advance_Deposit)
 
 		insert, err := db.Query(query_edit_property)
 		if err != nil {
@@ -49,7 +49,7 @@ func Update_Property() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE Property_Details SET Property_Name='%s',Contact_No='%s', Property_Type='%s', Property_Address='%s', City='%s', Pin_Code='%s', LandMark='%s' Ammeneties='%s', Price='%s', Advance_Deposit='%s' WHERE Property_ID=%d", edit_property.Property_Name, edit_property.Contact_No, edit_property.Property_Type, edit_property.Property_Address, edit_property.City, edit_property.Pin_Code, &edit_property.LandMark, edit_property.Ammeneties, edit_property.Price, edit_property.Advance_Deposit, edit_property.Property_ID)
+		query := fmt.Sprintf("UPDATE PropertyDetails SET Property_Name='%s',Contact_No='%s', Property_Type='%s', Property_Address='%s', City='%s', Pin_Code='%s', LandMark='%s' Ammeneties='%s', Price='%s', Advance_Deposit='%s' WHERE Property_ID=%d", edit_property.Property_Name, edit_property.Contact_No, edit_property.Property_Type, edit_property.Property_Address, edit_property.City, edit_property.Pin_Code, &edit_property.LandMark, edit_property.Ammeneties, edit_property.Price, edit_property.Advance_Deposit, edit_property.Property_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -72,7 +72,7 @@ func Delete_property() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("DELETE FROM Property_Details WHERE Property_ID=%d", delete_property.ID)
+		query := fmt.Sprintf("DELETE FROM PropertyDetails WHERE Property_ID=%d", delete_property.Property_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			panic(err.Error())
@@ -94,7 +94,7 @@ func See_bookings() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("SELECT * FROM Booking_Details WHERE Property_ID=%d", check_bookings.Property_ID)
+		query := fmt.Sprintf("SELECT * FROM BookingDetails WHERE Property_ID=%d", check_bookings.Property_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			panic(err.Error())
