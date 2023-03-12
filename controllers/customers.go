@@ -60,7 +60,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		fmt.Println(*&get_pgLocation.Landmark)
+		fmt.Println(*get_pgLocation.Landmark)
 		results, err := db.Query("SELECT * FROM PropertyDetails WHERE Landmark='%s'", *get_pgLocation.Landmark)
 		if err != nil {
 			panic(err.Error())
