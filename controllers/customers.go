@@ -131,7 +131,7 @@ func Update_booking() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_ID='%d',Customer_Name='%s',Cus_Contact_No='%s',Property_ID='%d',From_Date='%s',To_Date='%s' WHERE Booking_ID='%d' ", *edit_booking.Customer_ID, *edit_booking.Customer_Name, *edit_booking.Cus_Contact_No, *edit_booking.Property_ID, *edit_booking.From_Date, *edit_booking.To_Date, *edit_booking.Booking_ID)
+		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_ID='%d',Customer_Name='%s',Cus_Contact_No='%s',Property_ID='%d',From_Date='%s',To_Date='%s' WHERE Booking_ID=%d", *edit_booking.Customer_ID, *edit_booking.Customer_Name, *edit_booking.Cus_Contact_No, *edit_booking.Property_ID, *edit_booking.From_Date, *edit_booking.To_Date, *edit_booking.Booking_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
