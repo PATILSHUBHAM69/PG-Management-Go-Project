@@ -33,7 +33,7 @@ func Connect() {
 	defer Create_Property.Close()
 	fmt.Println("Property Details Successfully Created")
 
-	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS BookingDetails (Customer_ID INT,Customer_Name VARCHAR(25), Cus_Contact_No VARCHAR(15), Property_ID INT, Booking_time VARCHAR(15), Booking_ID INT NOT NULL AUTO_INCREMENT, From_Date VARCHAR(20), To_Date VARCHAR(20), PRIMARY KEY (Booking_ID) );")
+	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS BookingDetails (Booking_ID INT NOT NULL AUTO_INCREMENT,Customer_ID INT,Customer_Name VARCHAR(25),Cus_Contact_No VARCHAR(15),Property_ID INT, Booking_time VARCHAR(15),From_Date VARCHAR(20),To_Date VARCHAR(20), PRIMARY KEY (Booking_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}
