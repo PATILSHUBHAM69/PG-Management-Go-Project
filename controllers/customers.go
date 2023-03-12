@@ -61,6 +61,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 			return
 		}
 		fmt.Println(*get_pgLocation.Landmark)
+
 		results, err := db.Query("SELECT * FROM PropertyDetails WHERE Landmark='%s'", *get_pgLocation.Landmark)
 		fmt.Println("111")
 		if err != nil {
@@ -105,7 +106,7 @@ func Book_pg() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf(`INSERT INTO BookingDetails VALUES("%d","%s","%s" "%d","%s", "%s","%s")`, add_booking.Customer_ID, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.Booking_time, add_booking.From_Date, add_booking.To_Date)
+		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_ID,Customer_Name,Cus_Contact_No,Property_ID,Booking_time,From_Date,To_Date) VALUES(%d,"%s","%s" %d,"%s", "%s","%s")`, *add_booking.Customer_ID, *add_booking.Customer_Name, *add_booking.Cus_Contact_No, *add_booking.Property_ID, *add_booking.Booking_time, *add_booking.From_Date, *add_booking.To_Date)
 
 		insert, err := db.Query(query)
 		if err != nil {
