@@ -26,7 +26,7 @@ type User struct {
 	Property_Address *string            `json:"property_address"`
 	City             *string            `json:"city"`
 	Pin_Code         *string            `json:"pin_code"`
-	LandMark         *string            `json:"landmark"`
+	Landmark         *string            `json:"landmark"`
 	Property_Image   *string            `json:"property_image"`
 	Ammeneties       *string            `json:"ammeneties"`
 	Price            *string            `json:"price"`
