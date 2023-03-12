@@ -26,7 +26,7 @@ func Connect() {
 	fmt.Println("Connected to MySQL database!")
 
 	//Create Tabel
-	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS PropertyDetails (Property_ID INT NOT NULL AUTO_INCREMENT, Property_Name VARCHAR(25), Contact_No VARCHAR(255), Property_Type VARCHAR(255), Property_Address VARCHAR(200), City VARCHAR(20), Pin_Code VARCHAR(6), Landmark VARCHAR(30), Ammeneties VARCHAR(200), Price VARCHAR(15), Advance_Deposit VARCHAR(15), PRIMARY KEY (Property_ID) );")
+	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS PropertyDetails (Property_ID INT NOT NULL AUTO_INCREMENT, Property_Name VARCHAR(25), Contact_No VARCHAR(255), Property_Type VARCHAR(255), Property_Address VARCHAR(200), City VARCHAR(20), Pin_Code VARCHAR(6), Landmark VARCHAR(30), Ammeneties VARCHAR(200), Price VARCHAR(200), Advance_Deposit VARCHAR(15), PRIMARY KEY (Property_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}
