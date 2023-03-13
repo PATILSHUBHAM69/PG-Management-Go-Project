@@ -62,7 +62,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 		}
 		fmt.Println(*get_pgLocation.Landmark)
 
-		results, err := db.Query("SELECT * FROM PropertyDetails WHERE Landmark='%s'", get_pgLocation.Landmark)
+		results, err := db.Query("SELECT Property_ID,Property_Name,Contact_No,  Property_Type,Property_Address,City,Pin_Code,Landmark,Ammeneties,Price,Advance_Deposit FROM PropertyDetails WHERE Landmark='%s'", get_pgLocation.Landmark)
 		fmt.Println("111")
 		if err != nil {
 			fmt.Println("222")
