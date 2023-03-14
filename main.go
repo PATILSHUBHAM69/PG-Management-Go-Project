@@ -14,7 +14,7 @@ func main() {
 	router.Use(gin.Logger())
 
 	routes.AuthRoutes(router)
-	routes.UserRoutes(router)
+	routes.AdminRoutes(router)
 	routes.CustomerRoutes(router)
 	routes.PgOwnerRoutes(router)
 

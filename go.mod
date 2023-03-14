@@ -3,7 +3,6 @@ module github.com/PATILSHUBHAM69/PG-Management-Go-Project
 go 1.20
 
 require (
-	github.com/Viru9029/E-Commerce-Project v0.0.0-20230306120633-bc4baed0d849
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-playground/validator/v10 v10.11.2

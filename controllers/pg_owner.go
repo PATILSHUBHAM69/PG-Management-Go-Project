@@ -32,7 +32,7 @@ func Add_Property() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer insert.Close()
-		fmt.Println("Yes, Property added Successfully!")
+		c.IndentedJSON(201, "Yes, PG Added Successfully!")
 	}
 }
 
@@ -55,7 +55,7 @@ func Update_Property() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
+		c.IndentedJSON(200, "Yes, PG Update Successfully!")
 	}
 }
 
@@ -77,6 +77,7 @@ func Delete_property() gin.HandlerFunc {
 		if err != nil {
 			panic(err.Error())
 		}
+		c.IndentedJSON(200, "Yes, PG Delete Successfully!")
 		defer results.Close()
 	}
 }
@@ -114,8 +115,10 @@ func See_bookings() gin.HandlerFunc {
 			if err != nil {
 				panic(err.Error())
 			}
+			c.IndentedJSON(200, "See Your Booking")
 			output = fmt.Sprintf("Booking_Id=%d, Customer_ID=%d, Customer_Name='%s', Cus_Contact_No='%s', Property_ID=%d, Booking_Time='%s', From_Date='%s', To_date='%s' ", Booking_id, Customer_id, Customer_name, Cus_Contact_no, Property_id, Booking_time, From_date, To_date)
-			c.JSON(http.StatusOK, gin.H{" PG booking ": output})
+			c.JSON(http.StatusOK, gin.H{"": output})
 		}
+
 	}
 }

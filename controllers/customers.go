@@ -42,53 +42,8 @@ func Get_All_PG() gin.HandlerFunc {
 			}
 			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price='%s'  Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
 
-			c.JSON(http.StatusOK, gin.H{"All PG": output})
-		}
-	}
-}
-
-func Get_PG_ByLocation() gin.HandlerFunc {
-
-	return func(c *gin.Context) {
-		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
-		if err != nil {
-			panic(err.Error())
-		}
-		defer db.Close()
-		var get_pgLocation models.User
-		err = c.BindJSON(&get_pgLocation)
-		if err != nil {
-			return
-		}
-		fmt.Println(*get_pgLocation.Landmark)
-
-		results, err := db.Query("SELECT * FROM PropertyDetails WHERE Landmark = '%s' ", *get_pgLocation.Landmark)
-		fmt.Println("111")
-		if err != nil {
-			fmt.Println("222")
-			panic(err.Error())
-		}
-		defer results.Close()
-		var output interface{}
-		for results.Next() {
-			var propertyid int
-			var propertyname string
-			var contactno string
-			var propertytype string
-			var propertyaddress string
-			var city_ string
-			var pincode_ string
-			var landmark string
-			var ammeneties_ string
-			var price_ string
-			var advancedeposit string
-			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city_, &pincode_, &landmark, &ammeneties_, &price_, &advancedeposit)
-			if err != nil {
-				panic(err.Error())
-			}
-			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price='%s'  Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
-
-			c.JSON(http.StatusOK, gin.H{"All PG By Location": output})
+			c.IndentedJSON(200, "PG")
+			c.JSON(http.StatusOK, gin.H{"": output})
 		}
 	}
 }
@@ -113,7 +68,7 @@ func Book_pg() gin.HandlerFunc {
 			panic(err.Error())
 		}
 		defer insert.Close()
-		fmt.Println("Yes, PG Book Successfully!")
+		c.IndentedJSON(200, "Yes, PG Book Successfully!")
 
 	}
 }
@@ -137,6 +92,7 @@ func Update_booking() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		c.IndentedJSON(200, "Yes, Booking Update Successfully!")
 	}
 }
 
@@ -158,6 +114,7 @@ func Delete_Booking() gin.HandlerFunc {
 		if err != nil {
 			panic(err.Error())
 		}
+		c.IndentedJSON(201, "Yes, Booking Delete Successfully!")
 		defer results.Close()
 	}
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/database"
@@ -143,65 +142,27 @@ func Login() gin.HandlerFunc {
 
 func GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if err := helper.CheckUserType(c, "ADMIN"); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+		var userlist []models.User
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
-		if err != nil || recordPerPage < 1 {
-			recordPerPage = 10
-		}
-		page, err1 := strconv.Atoi(c.Query("page"))
-		if err1 != nil || page < 1 {
-			page = 1
-		}
-
-		startIndex := (page - 1) * recordPerPage
-		startIndex, err = strconv.Atoi(c.Query("startIndex"))
-
-		matchStage := bson.D{{"$match", bson.D{{}}}}
-		groupStage := bson.D{{"$group", bson.D{
-			{"_id", bson.D{{"_id", "null"}}},
-			{"total_count", bson.D{{"$sum", 1}}},
-			{"data", bson.D{{"$push", "$$ROOT"}}}}}}
-		projectStage := bson.D{
-			{"$project", bson.D{
-				{"_id", 0},
-				{"total_count", 1},
-				{"user_items", bson.D{{"$slice", []interface{}{"$data", startIndex, recordPerPage}}}}}}}
-		result, err := userCollection.Aggregate(ctx, mongo.Pipeline{
-			matchStage, groupStage, projectStage})
 		defer cancel()
+		cursor, err := userCollection.Find(ctx, bson.D{{}})
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while listing user items"})
-		}
-		var allusers []bson.M
-		if err = result.All(ctx, &allusers); err != nil {
-			log.Fatal(err)
-		}
-		c.JSON(http.StatusOK, allusers[0])
-	}
-}
-
-func GetUser() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		userId := c.Param("user_id")
-
-		if err := helper.MatchUserTypeToUid(c, userId); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			c.IndentedJSON(http.StatusInternalServerError, "Someting Went Wrong Please Try After Some Time")
 			return
 		}
-		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-		var user models.User
-		err := userCollection.FindOne(ctx, bson.M{"user_id": userId}).Decode(&user)
-		defer cancel()
+		err = cursor.All(ctx, &userlist)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			log.Println(err)
+			c.AbortWithStatus(http.StatusInternalServerError)
 			return
 		}
-		c.JSON(http.StatusOK, user)
+		defer cursor.Close(ctx)
+		if err := cursor.Err(); err != nil {
+			log.Println(err)
+			c.IndentedJSON(400, "invalid")
+			return
+		}
+		defer cancel()
+		c.IndentedJSON(200, userlist)
 	}
 }
