@@ -3,6 +3,7 @@ package controllers
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/PATILSHUBHAM69/PG-Management-Go-Project/models"
@@ -52,15 +53,16 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
 		if err != nil {
-			panic(err.Error())
+			log.Fatal(err)
 		}
-		defer db.Close()
-		var PG_ByLocation models.User
-		err = c.BindJSON(&PG_ByLocation)
+		var pg_bylocation models.User
+		err = c.BindJSON(&pg_bylocation)
 		if err != nil {
 			return
 		}
-		results, err := db.Query("SELECT * FROM propertydetails WHERE Landmark=%s", PG_ByLocation.Landmark)
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE City='%s' AND Landmark='%s'", *pg_bylocation.City, *pg_bylocation.Landmark)
+		fmt.Println(query_data)
+		results, err := db.Query(query_data)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -72,21 +74,63 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 			var contactno string
 			var propertytype string
 			var propertyaddress string
-			var city_ string
-			var pincode_ string
+			var city string
+			var pincode string
 			var landmark string
-			var ammeneties_ string
-			var price_ string
+			var ammeneties string
+			var price string
 			var advancedeposit string
-			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city_, &pincode_, &landmark, &ammeneties_, &price_, &advancedeposit)
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price, &advancedeposit)
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price='%s'  Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
+			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price, advancedeposit)
 
 			c.IndentedJSON(200, "PG")
 			c.JSON(http.StatusOK, gin.H{"": output})
+		}
+	}
+}
 
+func Get_PG_ByType() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
+		if err != nil {
+			log.Fatal(err)
+		}
+		var pg_bylocation models.User
+		err = c.BindJSON(&pg_bylocation)
+		if err != nil {
+			return
+		}
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Property_Type='%s'", *pg_bylocation.Property_Type)
+		fmt.Println(query_data)
+		results, err := db.Query(query_data)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer results.Close()
+		var output interface{}
+		for results.Next() {
+			var propertyid int
+			var propertyname string
+			var contactno string
+			var propertytype string
+			var propertyaddress string
+			var city string
+			var pincode string
+			var landmark string
+			var ammeneties string
+			var price string
+			var advancedeposit string
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price, &advancedeposit)
+			if err != nil {
+				panic(err.Error())
+			}
+			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price, advancedeposit)
+
+			c.IndentedJSON(200, "PG")
+			c.JSON(http.StatusOK, gin.H{"": output})
 		}
 	}
 }
