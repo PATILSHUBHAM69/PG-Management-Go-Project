@@ -48,6 +48,49 @@ func Get_All_PG() gin.HandlerFunc {
 	}
 }
 
+func Get_PG_ByLocation() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
+		if err != nil {
+			panic(err.Error())
+		}
+		defer db.Close()
+		var PG_ByLocation models.User
+		err = c.BindJSON(&PG_ByLocation)
+		if err != nil {
+			return
+		}
+		results, err := db.Query("SELECT * FROM propertydetails WHERE Landmark=%s", PG_ByLocation.Landmark)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer results.Close()
+		var output interface{}
+		for results.Next() {
+			var propertyid int
+			var propertyname string
+			var contactno string
+			var propertytype string
+			var propertyaddress string
+			var city_ string
+			var pincode_ string
+			var landmark string
+			var ammeneties_ string
+			var price_ string
+			var advancedeposit string
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city_, &pincode_, &landmark, &ammeneties_, &price_, &advancedeposit)
+			if err != nil {
+				panic(err.Error())
+			}
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price='%s'  Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
+
+			c.IndentedJSON(200, "PG")
+			c.JSON(http.StatusOK, gin.H{"": output})
+
+		}
+	}
+}
+
 func Book_pg() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
