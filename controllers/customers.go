@@ -35,13 +35,15 @@ func Get_All_PG() gin.HandlerFunc {
 			var pincode_ string
 			var landmark string
 			var ammeneties_ string
-			var price_ string
-			var advancedeposit string
-			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city_, &pincode_, &landmark, &ammeneties_, &price_, &advancedeposit)
+			var price_month int
+			var advance_deposit_month int
+			var price_day int
+			var advance_deposit_day int
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city_, &pincode_, &landmark, &ammeneties_, &price_month, &advance_deposit_month, &price_day, &advance_deposit_day)
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price='%s'  Advance_Deposit='%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_, advancedeposit)
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price_Month=%d Advance_Deposit_Month=%d Price_Day=%d   Advance_Deposit_Day=%d", propertyid, propertyname, contactno, propertytype, propertyaddress, city_, pincode_, landmark, ammeneties_, price_month, advance_deposit_month, price_day, advance_deposit_day)
 
 			c.IndentedJSON(200, "PG")
 			c.JSON(http.StatusOK, gin.H{"": output})
@@ -60,7 +62,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE City='%s' AND Landmark='%s'", *pg_bylocation.City, *pg_bylocation.Landmark)
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Landmark='%s' AND City='%s'", *pg_bylocation.City, *pg_bylocation.Landmark)
 		fmt.Println(query_data)
 		results, err := db.Query(query_data)
 		if err != nil {
@@ -78,13 +80,15 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 			var pincode string
 			var landmark string
 			var ammeneties string
-			var price string
-			var advancedeposit string
-			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price, &advancedeposit)
+			var price_month int
+			var advance_deposit_month int
+			var price_day int
+			var advance_deposit_day int
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price_month, &advance_deposit_month, &price_day, &advance_deposit_day)
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price, advancedeposit)
+			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' %d %d %d %d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
 
 			c.IndentedJSON(200, "PG")
 			c.JSON(http.StatusOK, gin.H{"": output})
@@ -121,13 +125,15 @@ func Get_PG_ByType() gin.HandlerFunc {
 			var pincode string
 			var landmark string
 			var ammeneties string
-			var price string
-			var advancedeposit string
-			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price, &advancedeposit)
+			var price_month int
+			var advance_deposit_month int
+			var price_day int
+			var advance_deposit_day int
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price_month, &advance_deposit_month, &price_day, &advance_deposit_day)
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price, advancedeposit)
+			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' %d %d %d %d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
 
 			c.IndentedJSON(200, "PG")
 			c.JSON(http.StatusOK, gin.H{"": output})
@@ -148,7 +154,7 @@ func Book_pg() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_ID,Customer_Name,Cus_Contact_No,Property_ID,Booking_time,From_Date,To_date) VALUES(%d,"%s","%s",%d,"%s","%s","%s")`, add_booking.Customer_ID, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.Booking_time, add_booking.From_Date, add_booking.To_Date)
+		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_Name,Cus_Contact_No,Property_ID,From_Date,To_date) VALUES("%s","%s",%d,"%s","%s")`, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.From_Date, add_booking.To_Date)
 
 		insert, err := db.Query(query)
 		if err != nil {
@@ -173,7 +179,7 @@ func Update_booking() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_ID=%d,Customer_Name='%s',Cus_Contact_No='%s',From_Date='%s',To_Date='%s' WHERE Booking_ID=%d", edit_booking.Customer_ID, edit_booking.Customer_Name, edit_booking.Cus_Contact_No, edit_booking.From_Date, edit_booking.To_Date, edit_booking.Booking_ID)
+		query := fmt.Sprintf("UPDATE BookingDetails SET Customer_Name='%s',Cus_Contact_No='%s',From_Date='%s',To_Date='%s' WHERE Booking_ID=%d", edit_booking.Customer_Name, edit_booking.Cus_Contact_No, edit_booking.From_Date, edit_booking.To_Date, edit_booking.Booking_ID)
 		_, err = db.Exec(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -25,7 +25,7 @@ func Add_Property() gin.HandlerFunc {
 			return
 		}
 
-		query := fmt.Sprintf(`INSERT INTO PropertyDetails (Property_Name,Contact_No,Property_Type,Property_Address,City,Pin_Code,Landmark,Ammeneties,Price,Advance_Deposit) VALUES("%s", "%s","%s", "%s", "%s", "%s", "%s","%s", "%s", "%s")`, *add_property.Property_Name, *add_property.Contact_No, *add_property.Property_Type, *add_property.Property_Address, *add_property.City, *add_property.Pin_Code, *add_property.Landmark, *add_property.Ammeneties, *add_property.Price, *add_property.Advance_Deposit)
+		query := fmt.Sprintf(`INSERT INTO PropertyDetails (Property_Name,Contact_No,Property_Type,Property_Address,Landmark,Pin_Code,City,Ammeneties,Price_Month,Advance_Deposit_Month,Price_Day,Advance_Deposit_Day) VALUES("%s", "%s","%s", "%s", "%s", "%s", "%s","%s", %d,%d,%d,%d)`, *add_property.Property_Name, *add_property.Contact_No, *add_property.Property_Type, *add_property.Property_Address, *add_property.City, *add_property.Pin_Code, *add_property.Landmark, *add_property.Ammeneties, *add_property.Price_Month, *add_property.Advance_Deposit_Month, *add_property.Price_Day, *add_property.Advance_Deposit_Day)
 
 		insert, err := db.Query(query)
 		if err != nil {
@@ -49,7 +49,7 @@ func Update_Property() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("UPDATE PropertyDetails SET Property_Name='%s',Contact_No='%s',Property_Type='%s',Property_Address='%s',City='%s',Pin_Code='%s',LandMark='%s',Ammeneties='%s',Price='%s',Advance_Deposit='%s' WHERE Property_ID ='%d' ", *edit_property.Property_Name, *edit_property.Contact_No, *edit_property.Property_Type, *edit_property.Property_Address, *edit_property.City, *edit_property.Pin_Code, *edit_property.Landmark, *edit_property.Ammeneties, *edit_property.Price, *edit_property.Advance_Deposit, *edit_property.Property_ID)
+		query := fmt.Sprintf("UPDATE PropertyDetails SET Property_Name='%s',Contact_No='%s',Property_Type='%s',Property_Address='%s',City='%s',Pin_Code='%s',LandMark='%s',Ammeneties='%s',Price_Month='%d', Advance_Deposit_Month='%d', Price_Day='%d',Advance_Deposit_Day='%d' WHERE Property_ID ='%d' ", *edit_property.Property_Name, *edit_property.Contact_No, *edit_property.Property_Type, *edit_property.Property_Address, *edit_property.Landmark, *edit_property.Pin_Code, *edit_property.City, *edit_property.Ammeneties, *edit_property.Price_Month, *edit_property.Advance_Deposit_Month, *edit_property.Price_Day, *edit_property.Advance_Deposit_Day, *edit_property.Property_ID)
 		_, err = db.Exec(query)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

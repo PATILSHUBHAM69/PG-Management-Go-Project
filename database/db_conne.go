@@ -26,18 +26,21 @@ func Connect() {
 	fmt.Println("Connected to MySQL database!")
 
 	//Create Tabel
-	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS PropertyDetails (Property_ID INT NOT NULL AUTO_INCREMENT, Property_Name VARCHAR(25), Contact_No VARCHAR(255), Property_Type VARCHAR(255), Property_Address VARCHAR(200), City VARCHAR(20), Pin_Code VARCHAR(6), Landmark VARCHAR(30), Ammeneties VARCHAR(200), Price VARCHAR(200), Advance_Deposit VARCHAR(15), PRIMARY KEY (Property_ID) );")
+	Create_Property, err := db.Query("CREATE TABLE IF NOT EXISTS PropertyDetails (Property_ID INT NOT NULL AUTO_INCREMENT, Property_Name VARCHAR(25), Contact_No VARCHAR(255), Property_Type VARCHAR(255), Property_Address VARCHAR(200), Landmark VARCHAR(30),City VARCHAR(20), Pin_Code VARCHAR(6),Ammeneties VARCHAR(200), Price_Month INT,Advance_Deposit_Month INT,Price_Day INT,Advance_Deposit_Day INT, PRIMARY KEY (Property_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer Create_Property.Close()
 	fmt.Println("Property Details Successfully Created")
 
-	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS BookingDetails (Booking_ID INT NOT NULL AUTO_INCREMENT,Customer_ID INT,Customer_Name VARCHAR(25),Cus_Contact_No VARCHAR(15),Property_ID INT, Booking_time VARCHAR(15),From_Date VARCHAR(200),To_Date VARCHAR(200), PRIMARY KEY (Booking_ID) );")
+	Create_Booking, err := db.Query("CREATE TABLE IF NOT EXISTS BookingDetails (Booking_ID INT NOT NULL AUTO_INCREMENT,Customer_ID INT,Customer_Name VARCHAR(25),Cus_Contact_No VARCHAR(15),Property_ID INT,From_Date VARCHAR(200),To_Date VARCHAR(200), PRIMARY KEY (Booking_ID) );")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer Create_Booking.Close()
 	fmt.Println("Property Details Successfully Created")
-
+	_, err = db.Query("SELECT CONCAT(Customer_Name,'-',Cus_Contact_No) as Customer_ID FROM BookingDetails;")
+	if err != nil {
+		panic(err.Error())
+	}
 }
