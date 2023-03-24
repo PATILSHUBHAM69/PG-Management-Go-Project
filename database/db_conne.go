@@ -38,9 +38,11 @@ func Connect() {
 		panic(err.Error())
 	}
 	defer Create_Booking.Close()
-	fmt.Println("Property Details Successfully Created")
-	_, err = db.Query("SELECT CONCAT(Customer_Name,'-',Cus_Contact_No) as Customer_ID FROM BookingDetails;")
-	if err != nil {
-		panic(err.Error())
-	}
+	fmt.Println("Property Booking Successfully Created")
+	/*
+		_, err = db.Query("SELECT CONCAT(Customer_Name,'-',Cus_Contact_No) as Customer_ID FROM BookingDetails;")
+		if err != nil {
+			panic(err.Error())
+		}
+	*/
 }

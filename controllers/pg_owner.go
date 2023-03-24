@@ -36,7 +36,7 @@ func Add_Property() gin.HandlerFunc {
 	}
 }
 
-func Update_Property() gin.HandlerFunc {
+func Update_PG_Detalis() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
@@ -56,10 +56,11 @@ func Update_Property() gin.HandlerFunc {
 			return
 		}
 		c.IndentedJSON(200, "Yes, PG Update Successfully!")
+		c.IndentedJSON(http.StatusCreated, edit_property)
 	}
 }
 
-func Delete_property() gin.HandlerFunc {
+func Delete_PG() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")

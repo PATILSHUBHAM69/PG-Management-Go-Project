@@ -29,8 +29,8 @@ type User struct {
 	Landmark              *string            `json:"landmark"`
 	Property_Image        *string            `json:"property_image"`
 	Ammeneties            *string            `json:"ammeneties"`
-	Price_Month           *int               `json:"price/month"`
-	Advance_Deposit_Month *int               `json:"advance_deposite/month"`
-	Price_Day             *int               `json:"price/day"`
-	Advance_Deposit_Day   *int               `json:"advance_deposit/day"`
+	Price_Month           *int               `json:"price_month"`
+	Advance_Deposit_Month *int               `json:"advance_deposit_month"`
+	Price_Day             *int               `json:"price_day"`
+	Advance_Deposit_Day   *int               `json:"advance_deposit_day"`
 }

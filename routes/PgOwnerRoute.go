@@ -9,7 +9,7 @@ import (
 func PgOwnerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.Use(middleware.Authenticate())
 	incomingRoutes.POST("/addproperty", controller.Add_Property())
-	incomingRoutes.PATCH("/updateproperty", controller.Update_Property())
-	incomingRoutes.DELETE("/deleteproperty", controller.Delete_property())
+	incomingRoutes.PATCH("/updateproperty", controller.Update_PG_Detalis())
+	incomingRoutes.DELETE("/deleteproperty", controller.Delete_PG())
 	incomingRoutes.GET("/seebooking", controller.See_bookings())
 }

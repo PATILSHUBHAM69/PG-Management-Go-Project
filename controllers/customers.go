@@ -88,7 +88,7 @@ func Get_PG_ByLocation() gin.HandlerFunc {
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' %d %d %d %d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price_Month=%d Advance_Deposit_Month=%d Price_Day=%d   Advance_Deposit_Day=%d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
 
 			c.IndentedJSON(200, "PG")
 			c.JSON(http.StatusOK, gin.H{"": output})
@@ -102,12 +102,12 @@ func Get_PG_ByType() gin.HandlerFunc {
 		if err != nil {
 			log.Fatal(err)
 		}
-		var pg_bylocation models.User
-		err = c.BindJSON(&pg_bylocation)
+		var pg_bytype models.User
+		err = c.BindJSON(&pg_bytype)
 		if err != nil {
 			return
 		}
-		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Property_Type='%s'", *pg_bylocation.Property_Type)
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Property_Type='%s'", *pg_bytype.Property_Type)
 		fmt.Println(query_data)
 		results, err := db.Query(query_data)
 		if err != nil {
@@ -133,9 +133,99 @@ func Get_PG_ByType() gin.HandlerFunc {
 			if err != nil {
 				panic(err.Error())
 			}
-			output = fmt.Sprintf("%d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s' %d %d %d %d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price_Month=%d Advance_Deposit_Month=%d Price_Day=%d   Advance_Deposit_Day=%d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
 
 			c.IndentedJSON(200, "PG")
+			c.JSON(http.StatusOK, gin.H{"": output})
+		}
+	}
+}
+
+func Get_PG_Price_Month() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
+		if err != nil {
+			log.Fatal(err)
+		}
+		var pg_byprice_month models.User
+		err = c.BindJSON(&pg_byprice_month)
+		if err != nil {
+			return
+		}
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Price_Month <'%d'", *pg_byprice_month.Price_Month)
+		fmt.Println(query_data)
+		results, err := db.Query(query_data)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer results.Close()
+		var output interface{}
+		for results.Next() {
+			var propertyid int
+			var propertyname string
+			var contactno string
+			var propertytype string
+			var propertyaddress string
+			var city string
+			var pincode string
+			var landmark string
+			var ammeneties string
+			var price_month int
+			var advance_deposit_month int
+			var price_day int
+			var advance_deposit_day int
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price_month, &advance_deposit_month, &price_day, &advance_deposit_day)
+			if err != nil {
+				panic(err.Error())
+			}
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price_Month=%d Advance_Deposit_Month=%d Price_Day=%d   Advance_Deposit_Day=%d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
+
+			c.IndentedJSON(200, "PG below given amount")
+			c.JSON(http.StatusOK, gin.H{"": output})
+		}
+	}
+}
+
+func Get_PG_Price_Day() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
+		if err != nil {
+			log.Fatal(err)
+		}
+		var pg_byprice_day models.User
+		err = c.BindJSON(&pg_byprice_day)
+		if err != nil {
+			return
+		}
+		query_data := fmt.Sprintf("SELECT * FROM PropertyDetails WHERE Price_Day <'%d'", *pg_byprice_day.Price_Day)
+		fmt.Println(query_data)
+		results, err := db.Query(query_data)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer results.Close()
+		var output interface{}
+		for results.Next() {
+			var propertyid int
+			var propertyname string
+			var contactno string
+			var propertytype string
+			var propertyaddress string
+			var city string
+			var pincode string
+			var landmark string
+			var ammeneties string
+			var price_month int
+			var advance_deposit_month int
+			var price_day int
+			var advance_deposit_day int
+			err = results.Scan(&propertyid, &propertyname, &contactno, &propertytype, &propertyaddress, &city, &pincode, &landmark, &ammeneties, &price_month, &advance_deposit_month, &price_day, &advance_deposit_day)
+			if err != nil {
+				panic(err.Error())
+			}
+			output = fmt.Sprintf(" Property_ID=%d,  Property_Name='%s'  Contact_Name='%s'  Property_Type='%s'  Property_Address='%s'  City='%s'  Pincode='%s'  Landmark='%s'  Ammeneties='%s'  Price_Month=%d Advance_Deposit_Month=%d Price_Day=%d   Advance_Deposit_Day=%d", propertyid, propertyname, contactno, propertytype, propertyaddress, city, pincode, landmark, ammeneties, price_month, advance_deposit_month, price_day, advance_deposit_day)
+
+			c.IndentedJSON(200, "PG below given amount")
 			c.JSON(http.StatusOK, gin.H{"": output})
 		}
 	}
@@ -157,6 +247,10 @@ func Book_pg() gin.HandlerFunc {
 		query := fmt.Sprintf(`INSERT INTO BookingDetails (Customer_Name,Cus_Contact_No,Property_ID,From_Date,To_date) VALUES("%s","%s",%d,"%s","%s")`, add_booking.Customer_Name, add_booking.Cus_Contact_No, add_booking.Property_ID, add_booking.From_Date, add_booking.To_Date)
 
 		insert, err := db.Query(query)
+		if err != nil {
+			panic(err.Error())
+		}
+		_, err = db.Query("SELECT CONCAT(Customer_Name,'-',Cus_Contact_No) as Customer_ID FROM BookingDetails;")
 		if err != nil {
 			panic(err.Error())
 		}
