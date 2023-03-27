@@ -83,7 +83,7 @@ func Delete_PG() gin.HandlerFunc {
 	}
 }
 
-func See_bookings() gin.HandlerFunc {
+func See_Bookings() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
@@ -96,7 +96,7 @@ func See_bookings() gin.HandlerFunc {
 		if err != nil {
 			return
 		}
-		query := fmt.Sprintf("SELECT * FROM BookingDetails WHERE Property_ID=%d", check_bookings.Property_ID)
+		query := fmt.Sprintf("SELECT Booking_ID, Customer_Name, Cus_Contact_No, Property_ID, From_Date, To_Date FROM BookingDetails WHERE Property_ID=%d", check_bookings.Property_ID)
 		results, err := db.Query(query)
 		if err != nil {
 			panic(err.Error())
@@ -105,19 +105,17 @@ func See_bookings() gin.HandlerFunc {
 		var output interface{}
 		for results.Next() {
 			var Booking_id int
-			var Customer_id int
 			var Customer_name string
 			var Cus_Contact_no string
 			var Property_id int
-			var Booking_time string
 			var From_date string
 			var To_date string
-			err = results.Scan(&Booking_id, &Customer_id, &Customer_name, &Cus_Contact_no, &Property_id, &Booking_time, &From_date, &To_date)
+			err = results.Scan(&Booking_id, &Customer_name, &Cus_Contact_no, &Property_id, &From_date, &To_date)
 			if err != nil {
 				panic(err.Error())
 			}
 			c.IndentedJSON(200, "See Your Booking")
-			output = fmt.Sprintf("Booking_Id=%d, Customer_ID=%d, Customer_Name='%s', Cus_Contact_No='%s', Property_ID=%d, Booking_Time='%s', From_Date='%s', To_date='%s' ", Booking_id, Customer_id, Customer_name, Cus_Contact_no, Property_id, Booking_time, From_date, To_date)
+			output = fmt.Sprintf("Booking_Id=%d,Customer_Name='%s', Cus_Contact_No='%s', Property_ID=%d, From_Date='%s', To_date='%s' ", Booking_id, Customer_name, Cus_Contact_no, Property_id, From_date, To_date)
 			c.JSON(http.StatusOK, gin.H{"": output})
 		}
 

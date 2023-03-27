@@ -11,5 +11,5 @@ func PgOwnerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.POST("/addproperty", controller.Add_Property())
 	incomingRoutes.PATCH("/updateproperty", controller.Update_PG_Detalis())
 	incomingRoutes.DELETE("/deleteproperty", controller.Delete_PG())
-	incomingRoutes.GET("/seebooking", controller.See_bookings())
+	incomingRoutes.GET("/seebooking", controller.See_Bookings())
 }

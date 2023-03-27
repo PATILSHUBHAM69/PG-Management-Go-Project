@@ -13,7 +13,8 @@ func CustomerRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.GET("/all_pg_bytype", controller.Get_PG_ByType())
 	incomingRoutes.GET("/all_pg_byprice_month", controller.Get_PG_Price_Month())
 	incomingRoutes.GET("/all_pg_byprice_day", controller.Get_PG_Price_Day())
-	incomingRoutes.POST("/bookpg", controller.Book_pg())
-	incomingRoutes.PATCH("/updatebooking", controller.Update_booking())
+	incomingRoutes.POST("/bookpg", controller.Book_PG())
+	incomingRoutes.GET("/see_booking_cus", controller.See_Booking_Cus())
+	incomingRoutes.PATCH("/updatebooking", controller.Update_Booking())
 	incomingRoutes.DELETE("/canclebooking", controller.Delete_Booking())
 }

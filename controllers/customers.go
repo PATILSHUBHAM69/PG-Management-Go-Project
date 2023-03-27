@@ -231,7 +231,7 @@ func Get_PG_Price_Day() gin.HandlerFunc {
 	}
 }
 
-func Book_pg() gin.HandlerFunc {
+func Book_PG() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
@@ -250,17 +250,51 @@ func Book_pg() gin.HandlerFunc {
 		if err != nil {
 			panic(err.Error())
 		}
-		_, err = db.Query("SELECT CONCAT(Customer_Name,'-',Cus_Contact_No) as Customer_ID FROM BookingDetails;")
-		if err != nil {
-			panic(err.Error())
-		}
 		defer insert.Close()
 		c.IndentedJSON(200, "Yes, PG Book Successfully!")
 
 	}
 }
 
-func Update_booking() gin.HandlerFunc {
+func See_Booking_Cus() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
+		if err != nil {
+			panic(err.Error())
+		}
+		defer db.Close()
+		var check_booking_cus models.Booking_pg
+		err = c.BindJSON(&check_booking_cus)
+		if err != nil {
+			return
+		}
+		query := fmt.Sprintf("SELECT Booking_ID,Customer_Name,Cus_Contact_No,Customer_ID,Property_ID,From_date,To_Date FROM BookingDetails WHERE Customer_ID = '%s'", check_booking_cus.Customer_ID)
+		results, err := db.Query(query)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer results.Close()
+		var output interface{}
+		for results.Next() {
+			var Booking_id int
+			var Customer_name string
+			var Cus_contact_no string
+			var Customer_id string
+			var Property_id int
+			var From_date string
+			var To_date string
+			err = results.Scan(&Booking_id, &Customer_name, &Cus_contact_no, &Customer_id, &Property_id, &From_date, &To_date)
+			if err != nil {
+				panic(err.Error())
+			}
+			c.IndentedJSON(200, "See Your Booking")
+			output = fmt.Sprintf("Booking_Id=%d,Customer_Name='%s',Cus_Contact_No='%s',Customer_Id='%s',Property_Id=%d,From_Date='%s',To_Date='%s'", Booking_id, Customer_name, Cus_contact_no, Customer_id, Property_id, From_date, To_date)
+			c.JSON(http.StatusOK, gin.H{"": output})
+		}
+	}
+}
+
+func Update_Booking() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:india@123@tcp(127.0.0.1:3306)/pgmanagement")
@@ -280,6 +314,7 @@ func Update_booking() gin.HandlerFunc {
 			return
 		}
 		c.IndentedJSON(200, "Yes, Booking Update Successfully!")
+		c.IndentedJSON(http.StatusCreated, edit_booking)
 	}
 }
 
